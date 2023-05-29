@@ -1,17 +1,12 @@
 import React from 'react'
 import { useState, useEffect} from 'react'
-import NewResource from './NewResource'
 
 import { Link } from 'react-router-dom'
 
 function SubjectPage() {
     const [subjects, setSubjects] = useState([])
-    const [newResource, setNewResource] = useState([]);
 
-    function addNewResource(oneResource) {
-      setNewResource([...subjects, oneResource])
-    }
-      // console.l
+
 
     useEffect(() => {
 fetch(`http://localhost:9292/subjects`)
@@ -36,7 +31,7 @@ return (
   <div className='subjectMap  '>
 
   <h2 key={subject.id} >
-<Link to={`/subjects/${subject.id}`} addNewResource={addNewResource} newResource={newResource}>
+<Link to={`/subjects/${subject.id}`} >
   {subject.name}
 </Link>
   </h2>
@@ -46,7 +41,6 @@ return (
  ))}
   </div>
 
-  <NewResource/>
 
 
     </div>

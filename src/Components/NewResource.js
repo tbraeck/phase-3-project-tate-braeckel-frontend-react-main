@@ -21,7 +21,7 @@ function NewResource({ addNewResource }) {
         }
 
 
-        fetch(`http://localhost:3000/resources`, {
+        fetch(`http://localhost:9292/resources`, {
             method: "POST",
             headers: {
                 "Content-Type": 'application/json',
