@@ -2,16 +2,22 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import Resource from './Resource'
+import NewResource from './NewResource'
 // import { Link } from 'react-router-dom'
 
 function Subject( ) {
   const [subject, setSubject] = useState({
     resources: []
   })
+  const [newResource, setNewResource] = useState([]);
 
 
 // const [subjectForm, setSubjectForm] = useState(false)
+function addNewResource(oneResource) {
+  setNewResource([...newResource, oneResource])
+  console.log(oneResource)
 
+}
 const {id} = useParams()
 
   useEffect(() => {
@@ -22,11 +28,11 @@ const {id} = useParams()
 
 
   console.log(subject.resources)
-const resources = subject.resources.map(res => <Resource key={res.id} resource={res}/>)
-
+const resources = subject.resources.map(res => <Resource key={res.id} resource={res}/> )
+// const addResource = subject.resources.map(res => <Resource key={res.id} resource= {[...subject, newResource]}/>);
   return(
   <div className='subjectList'>
-
+<NewResource addNewResource={addNewResource} />
       <br/>
       <div className="subjectBox">
     <h1 className='subjectInfo'>Subject: </h1>
@@ -39,7 +45,15 @@ const resources = subject.resources.map(res => <Resource key={res.id} resource={
 
    {resources}
    </div>
+   <div>
+<h1>
+  {/* {addResource} */}
+</h1>
+   </div>
+
+
     </div>
+
     )
 }
 

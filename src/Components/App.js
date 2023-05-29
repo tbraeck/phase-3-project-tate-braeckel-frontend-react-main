@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      
+
       <Header />
       <NavBar />
       {/* <Home/> */}
@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/subjects" element={<SubjectPage />} />
           <Route path="/subjects/:id" element={<Subject />} />
-       
+
         </Routes>
       </div>
     </div>
