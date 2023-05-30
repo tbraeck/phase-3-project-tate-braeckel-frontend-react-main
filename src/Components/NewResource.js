@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-function NewResource({ addNewResource }) {
+function NewResource({ handleAdd,handleUpdate }) {
     const [subject, setSubject] = useState("")
     const [name, setName] = useState("")
     const [description, setDescription] = useState("");
@@ -29,7 +29,8 @@ function NewResource({ addNewResource }) {
             body: JSON.stringify(newResource)
         })
             .then((r) => r.json())
-            .then((aResource) => addNewResource(aResource))
+            .then((newResource) => handleAdd(newResource))
+            console.log(newResource)
     }
 
 
