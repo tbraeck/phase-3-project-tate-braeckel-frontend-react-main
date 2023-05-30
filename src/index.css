@@ -115,16 +115,34 @@ body {
   padding: 50px;
 }
 
-.subjectMap {
-  /* display: flex; */
+.subjectList {
+  /* display: flex;
+  flex-direction: row; */
 
-  margin-right: 500px;
+  margin-left: 400px;
+  margin-top: 50px;
   border: 4px;
   border-color: black;
   border-radius: 15px;
 }
 
-.
+.subjectBox{
+
+
+}
+
+.subjectInfoB{
+  font-weight: bolder;
+  font-size: larger;
+  font-style: italic;
+}
+
+/* .subjectBox{
+  display: flex;
+  align-items: center;
+} */
+
+
 .saveForm {
   display: flex;
   flex-direction: row;

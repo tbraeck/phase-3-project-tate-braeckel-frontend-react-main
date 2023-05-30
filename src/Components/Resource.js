@@ -17,7 +17,7 @@ function Resource({resource}) {
       <br/>
       <h2>Resource URL: </h2>
       < a href={resource.url} target="_blank" rel="noopener noreferrer">{resource.url}</a>
-     
+
     </div>
   )
 }
