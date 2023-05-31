@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-function NewResource({ handleAdd,handleUpdate }) {
+function NewResource({ handleAdd }) {
     const [subject, setSubject] = useState("")
     const [name, setName] = useState("")
     const [description, setDescription] = useState("");
