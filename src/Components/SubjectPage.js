@@ -1,4 +1,5 @@
 import React from 'react'
+import Search from './Search'
 import { useState, useEffect} from 'react'
 
 import { Link } from 'react-router-dom'
@@ -6,6 +7,8 @@ import { Link } from 'react-router-dom'
 
 function SubjectPage() {
     const [subjects, setSubjects] = useState([])
+    const [searchTerm, setSearchTerm] = useState("");
+
     // const [newResource, setNewResource] = useState([]);
 
 
@@ -17,25 +20,10 @@ fetch(`http://localhost:9292/subjects`)
 .then((data) => setSubjects(data))
 
     }, [])
-    // console.log(subjects)
 
-    // function handleDelete(id){
-    //   const updatedResourcesArray = subjects.resources.filter((subject) => subject.id !== id)
-    // setSubjects(updatedResourcesArray);
-    // }
-
-
-    // function handleUpdatedResources(updatedResource) {
-    //   const updatedResourceArray = subjects.resources.map((oneResource) => {
-    //       if (oneResource.id === updatedResource.id) {
-    //           return <h1>{updatedResource}</h1>;
-    //       } else {
-    //           return subjects.resources;
-    //       }
-    //   });
-    //   setSubjects(updatedResourceArray)
-    // }
-
+    const displayedSubjects = subjects.filter((subject) => {
+      return subject.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 return (
   <div>
 
@@ -45,11 +33,17 @@ return (
 
 
  </h2>
- {subjects.map((subject) => (
+ <div className='subjectsTitle'>
+ <h1 >SUBJECTS</h1>
 
-  <div className='subjectMap  '>
+ </div>
+ <div className='subjectMap  ' >
 
-  <h2 key={subject.id} >
+ {displayedSubjects.map((subject) => (
+
+  <div key={subject.id}>
+
+  <h2  >
 <Link to={`/subjects/${subject.id}`}  >
 
   {subject.name}
@@ -59,10 +53,12 @@ return (
   </div>
 
  ))}
+ </div>
   </div>
 
-
-
+<div className='searchBar'>
+  <Search className='searchBarReal' searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+  </div>
     </div>
   )
 }

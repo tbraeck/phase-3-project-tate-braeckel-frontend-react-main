@@ -1,23 +1,19 @@
 import React from 'react'
 import { useState } from 'react'
 
-function NewResource({ handleAdd }) {
-    const [subject, setSubject] = useState("")
+function NewResource({ handleAdd, subjectID }) {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("")
 
-
-
-
-    function handleSubmit(e) {
-        e.preventDefault();
+    function handleSubmit() {
+        // e.preventDefault();
 
         let newResource = {
-            subject: subject,
             name: name,
             description: description,
-            url: url
+            url: url,
+            subject_id: subjectID
         }
 
 
@@ -29,7 +25,7 @@ function NewResource({ handleAdd }) {
             body: JSON.stringify(newResource)
         })
             .then((r) => r.json())
-            .then((newResource) => handleAdd(newResource))
+            .then((aResource) => handleAdd(aResource))
             console.log(newResource)
     }
 
@@ -45,8 +41,6 @@ function NewResource({ handleAdd }) {
                 <input className="formDescription" type="text" name="description" placeholder="description" value={description} onChange={(e) => setDescription(e.target.value)} />
 
                 <input className="formUrl" type="text" name="url" placeholder="URL" value={url} onChange={(e) => setUrl(e.target.value)} />
-
-                <input className="formSubject" type="text" name="subject" placeholder="subject" value={subject} onChange={(e) => setSubject(e.target.value)} />
 
                 <button className="formButton" type="submit">Add Resource</button>
             </form>

@@ -9,6 +9,12 @@ function Subject( ) {
   const [subject, setSubject] = useState({
     resources: []
   })
+  const [resources, setResources] = useState({
+    name: '',
+description: '',
+url: '',
+subject_id: ''
+  })
 
   const {id} = useParams()
 
@@ -19,12 +25,27 @@ function Subject( ) {
         }, [id])
 
 
-function handleAdd(newResource){
-  const updatedResourceArray =
-  [...resources, newResource]
-  console.log(updatedResourceArray)
-  setSubject(updatedResourceArray)
+useEffect(()=> {
+  fetch(`http://localhost:9292/resources`)
+  .then((r) => r.json())
+  .then((data) => setResources(data))
+      }, [])
+      // console.log(resources)
 
+
+function handleAdd(aResource){
+  const updatedResourceArray =
+  [...resources, aResource]
+  setResources(updatedResourceArray)
+  console.log(updatedResourceArray)
+
+}
+
+
+function handleDeleteResource(id) {
+  const updatedResourceArray = subject.resources.filter((resource)=> resource.id !== id);
+  setResources(...subject.resources, updatedResourceArray)
+  console.log(updatedResourceArray)
 }
 
 function handleUpdate(updatedResource) {
@@ -35,46 +56,43 @@ function handleUpdate(updatedResource) {
       return resource;
     }
   });
-  setSubject(updatedResourceArray);
+  setResources(updatedResourceArray);
 }
 
+  // console.log(resources)
 
-  console.log(subject.resources)
-
-const resources = subject.resources.map(res => <Resource key={res.id} resource={res}/> )
+const resourcesMap = subject.resources.map(res => <Resource key={res.id} resource={res} deleteResource={handleDeleteResource}  handleUpdate={handleUpdate} value={resources}/> )
 
 
 return(
   <div className='subjectList' key={subject.id}>
-     <NewResource handleAdd={handleAdd} />
+     <NewResource subjectID={subject.id} handleAdd={handleAdd} />
+
       <br/>
       <div className="subjectBox">
-    <h1 className='subjectInfoB' style={{ color: 'rgb(245, 173, 173)', lineHeight : 0, padding: 20, fontSize: "50px" }}>Subject: </h1>
-    <h1 className='subjectInfo' style={{ color: 'black', lineHeight : 0, padding: 20, fontSize: "40px", marginLeft: "40px", backgroundColor: 'rgb(239, 200, 100)', paddin: '10px', margin: '10px' }}>{subject.name}</h1>
+    <h1 className='subjectInfoB' style={{ color: 'rgb(245, 173, 173)', lineHeight : 0, padding: 20, fontSize: "50px", marginTop: "20px" }}>Subject: </h1>
+    <h1 className='subjectInfo' style={{ color: 'black', lineHeight : 0, padding: '20px',paddinTop: '20px', fontSize: "40px", marginLeft: "40px", backgroundColor: 'rgb(239, 200, 100)', margin: '10px' }}>{subject.name}</h1>
     <br/>
-   
+
     <h1 className='subjectInfoB'>Description: </h1>
 
     <h1 className='subjectInfo'>{subject.description}</h1>
     <br/>
     <hr></hr>
     <br/>
-    <h1 className='subjectInfo' handleUpdate={handleUpdate}>Resources: </h1>
+    </div>
+    <div className='subjectInfoRes'>
+    <h1>RESOURCES</h1>
     <hr></hr>
     <br/>
 
-   {resources}
- 
-   </div>
-   <button type='delete' className='subjectInfoB'>Delete Resource</button>
-
-   <div>
-<h1>
-  {/* {addResource} */}
-</h1>
-   </div>
+    </div>
 
 
+    <div className='resourceList'>
+    {resourcesMap}
+    </div>
+   <br/>
     </div>
 
     )
