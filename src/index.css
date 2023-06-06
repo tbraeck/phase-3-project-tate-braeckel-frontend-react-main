@@ -183,10 +183,18 @@ padding-left: 20px;
   padding: 20px;
   width: 500px;
 }
+
+.delBtn{
+  display: flex;
+  flex-direction: row;
+  margin-left: 300px;
+  margin-top: 50px;
+}
 .editResBtn{
   display: flex;
   flex-direction: row;
-  margin-left: 200px;
+  margin-left: 0px;
+  margin-top: -30px;
   }
  /* .resourceBox{
   width: 400px;

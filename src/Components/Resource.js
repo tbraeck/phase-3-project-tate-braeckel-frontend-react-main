@@ -65,7 +65,7 @@ const updatedResource ={
       <br/>
       <h2>Resource Number: {id}</h2>
       <br/>
-      <button type='submit' onClick={ handleClick}>DELETE </button>
+      
 
       <form onSubmit={handleClickEdit}>
         <input
@@ -86,6 +86,10 @@ const updatedResource ={
           value={editingText.url}
           onChange={(e) => setEditingText(e.target.value)}
         />
+        <div className='delBtn'>
+      <button type='submit' onClick={ handleClick}>DELETE </button>
+
+      </div>
         <div className='editResBtn'>
         <button  type='submit' style={{marginRight: "330px"}} onClick={() => setEditResource(resource.id)}>EDIT </button>
 
