@@ -74,7 +74,7 @@ value={resources}/>
 
 
 return(
-  <div className='subjectList' key={subject.id}>
+  <div className='subjectBoxOverall' key={subject.id}>
      <NewResource subjectID={subject.id} handleAdd={handleAdd} />
 
       <br/>

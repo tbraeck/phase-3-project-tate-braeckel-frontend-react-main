@@ -33,18 +33,19 @@ function NewResource({ handleAdd, subjectID }) {
     return (
         <div className="newResourceForm" >
             <div className="h2Wrapper">
-                <h2 className="newResourceH2">  Add New Resources Here  </h2>
+                <h2 className="newResourceH2">  <b>A</b>dd  <b>N</b>ew  <b>R</b>esources  <b>H</b>ere  </h2>
             </div>
             <br/>            <br/>
 
             <form className="form" onSubmit={handleSubmit}>
                 <input className="formInput" type="text" name="name" placeholder="Resource Name" value={name} onChange={(e) => setName(e.target.value)} />
-
-                <input className="formInput" type="text" name="description" placeholder="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-
+                <input className="formInput" type="text" name="description" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
                 <input className="formInput" type="text" name="url" placeholder="URL" value={url} onChange={(e) => setUrl(e.target.value)} />
-
+                
+                <div>
                 <button className="formButton" type="submit">Add Resource</button>
+
+                    </div>
             </form>
         </div>
     )
