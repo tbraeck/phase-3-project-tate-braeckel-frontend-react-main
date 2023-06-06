@@ -43,9 +43,13 @@ function handleAdd(aResource){
 
 
 function handleDeleteResource(id) {
-  const updatedResourceArray = subject.resources.filter((resource)=> resource.id !== id);
-  setResources(...subject.resources, updatedResourceArray)
-  console.log(updatedResourceArray)
+  if(window.confirm("Do you want to delete this resource?")){
+    const updatedResourceArray = resources.filter((resource)=> resource.id !== id);
+    setResources(...resources, updatedResourceArray)
+    window.location.reload()
+    console.log(updatedResourceArray)
+  }
+ 
 }
 
 function handleUpdate(updatedResource) {
@@ -61,7 +65,12 @@ function handleUpdate(updatedResource) {
 
   // console.log(resources)
 
-const resourcesMap = subject.resources.map(res => <Resource key={res.id} resource={res} deleteResource={handleDeleteResource}  handleUpdate={handleUpdate} value={resources}/> )
+const resourcesMap = subject.resources.map(res => 
+<Resource key={res.id} resource={res} 
+deleteResource={handleDeleteResource}  
+handleUpdate={handleUpdate} 
+value={resources}/> 
+)
 
 
 return(
