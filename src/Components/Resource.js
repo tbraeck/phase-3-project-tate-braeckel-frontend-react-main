@@ -5,12 +5,8 @@ import { useState } from 'react';
 
 
 function Resource({resource, deleteResource, handleUpdate}) {
-  const [editResource, setEditResource] = useState({
-    name: '',
-    description: '',
-    url: ''
-  })
-
+  const [editResource, setEditResource] = useState(null);
+  const [editingText, setEditingText] = useState('')
   const { name, description, url } = resource;
 
 
@@ -27,6 +23,13 @@ function Resource({resource, deleteResource, handleUpdate}) {
 
   function handleClickEdit(e){
 // e.preventDefault()
+const updatedResource ={
+  name: name,
+  description: description,
+  url: url
+};
+
+// {editRe === resource.id ?  <p>I am here jimmy</p>  :  <p>I am not here</p>  }
 
       fetch(`http://localhost:9292/resources/${id}`, {
         method: "PATCH",
@@ -34,14 +37,15 @@ function Resource({resource, deleteResource, handleUpdate}) {
 	headers: {
 	"Content-Type": "application/json"
 	},
-	body: JSON.stringify(resource)
+	body: JSON.stringify(updatedResource)
 })
 	.then((res) => res.json())
-	.then((updatedResource) =>
-  handleUpdate(updatedResource)
-	
-	);
-  console.log(editResource)
+	.then((editResource) =>
+  handleUpdate(editResource)
+
+	)
+
+
 };
 // console.log(resource)
 
@@ -67,22 +71,25 @@ function Resource({resource, deleteResource, handleUpdate}) {
         <input
           type="text"
           placeholder="New Name"
-          value={editResource.name}
-          onChange={(e) => setEditResource(e.target.value)}
+          value={editingText.name}
+          onChange={(e) => setEditingText(e.target.value)}
         />
          <input
           type="text"
           placeholder="New Description"
-          value={editResource.description}
-          onChange={(e) => setEditResource(e.target.value)}
+          value={editingText.description}
+          onChange={(e) => setEditingText(e.target.value)}
         />
          <input
           type="text"
           placeholder="New Url"
-          value={editResource.url}
-          onChange={(e) => setEditResource(e.target.value)}
+          value={editingText.url}
+          onChange={(e) => setEditingText(e.target.value)}
         />
-      <button  type='submit' style={{marginRight: "330px"}} onClick={(e) => handleClickEdit(resource)}>EDIT </button>
+        <div className='editResBtn'>
+        <button  type='submit' style={{marginRight: "330px"}} onClick={() => setEditResource(resource.id)}>EDIT </button>
+
+        </div>
       </form>
 
 
