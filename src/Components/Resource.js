@@ -65,33 +65,40 @@ const updatedResource ={
       <br/>
       <h2>Resource Number: {id}</h2>
       <br/>
-      
+
 
       <form onSubmit={handleClickEdit}>
+        <div className='input'>
         <input
           type="text"
           placeholder="New Name"
           value={editingText.name}
           onChange={(e) => setEditingText(e.target.value)}
         />
+        </div>
+        <div className='input'>
          <input
           type="text"
           placeholder="New Description"
           value={editingText.description}
           onChange={(e) => setEditingText(e.target.value)}
         />
-         <input
+        </div>
+        <div className='input'>
+        <input 
           type="text"
           placeholder="New Url"
           value={editingText.url}
           onChange={(e) => setEditingText(e.target.value)}
         />
+        </div>
+
         <div className='delBtn'>
-      <button type='submit' onClick={ handleClick}>DELETE </button>
+      <button className="btnStyle" type='submit' onClick={ handleClick}>DELETE </button>
 
       </div>
         <div className='editResBtn'>
-        <button  type='submit' style={{marginRight: "330px"}} onClick={() => setEditResource(resource.id)}>EDIT </button>
+        <button  className="btnStyle" type='submit' style={{marginRight: "330px"}} onClick={() => setEditResource(resource.id)}>EDIT </button>
 
         </div>
       </form>
