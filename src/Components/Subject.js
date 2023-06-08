@@ -7,52 +7,54 @@ import NewResource from './NewResource'
 
 function Subject( ) {
   const [subject, setSubject] = useState({
+    // name: '',
+    // description: '',
+    // url: '',
     resources: []
-  })
-  const [resources, setResources] = useState({
-    name: '',
-description: '',
-url: '',
-subject_id: ''
-  })
+})
+
 
   const {id} = useParams()
+
 
   useEffect(() => {
     fetch(`http://localhost:9292/subjects/${id}`)
     .then((r) => r.json())
     .then((data) => setSubject(data))
         }, [id])
+        // console.log(subject.resources)
 
 
-useEffect(()=> {
-  fetch(`http://localhost:9292/resources`)
-  .then((r) => r.json())
-  .then((data) => setResources(data))
-      }, [])
-      // console.log(resources)
-
+// useEffect(()=> {
+//   fetch(`http://localhost:9292/resources`)
+//   .then((r) => r.json())
+//   .then((data) => setSubject(data))
+//       }, [])
+//       console.log(subject)
+let resources = subject.resources;
 
 function handleAdd(aResource){
   const updatedResourceArray =
-  [...resources, aResource]
-  setResources(updatedResourceArray)
-  console.log(updatedResourceArray)
+  [...subject.resources, aResource]
+  setSubject(updatedResourceArray)
+  // console.log(updatedResourceArray)
 
 }
+// console.log(subject)
 
 
 function handleDeleteResource(id) {
   if(window.confirm("Do you want to delete this resource?")){
     const updatedResourceArray = resources.filter((resource)=> resource.id !== id);
-    setResources(...resources, updatedResourceArray)
+    setSubject(...resources, updatedResourceArray)
     window.location.reload()
-    console.log(updatedResourceArray)
+    // console.log(updatedResourceArray)
   }
- 
+
 }
 
 function handleUpdate(updatedResource) {
+
   const updatedResourceArray = subject.resources.map((resource) => {
     if (resource.id === updatedResource.id) {
       return updatedResource;
@@ -60,17 +62,36 @@ function handleUpdate(updatedResource) {
       return resource;
     }
   });
-  setResources(updatedResourceArray);
+  setSubject(updatedResourceArray);
+console.log(updatedResourceArray)
 }
 
-  // console.log(resources)
 
-const resourcesMap = subject.resources.map(res => 
-<Resource key={res.id} resource={res} 
-deleteResource={handleDeleteResource}  
-handleUpdate={handleUpdate} 
-value={resources}/> 
+// const updatedSubjects = subject.resources.map(resource => {
+//   if(subject.resource.id === updatedSubject.id) {
+//     return updatedSubject
+//   }
+//   return subject
+// })
+// console.log(subject)subject
+
+  // console.log(subject.resources)
+
+const resourcesMap = subject.resources.map((resource) =>
+<Resource key={resource.id} 
+subject={subject}
+resource={subject.resource}
+deleteResource={handleDeleteResource}
+handleUpdate={handleUpdate}
+value={subject.resources}
+subjectID={subject.id}/>
+
 )
+
+
+console.log(subject)
+console.log(subject.resources)
+
 
 
 return(
