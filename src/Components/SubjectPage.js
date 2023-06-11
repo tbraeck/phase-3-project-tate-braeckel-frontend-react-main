@@ -1,18 +1,11 @@
 import React from 'react'
 import Search from './Search'
 import { useState, useEffect} from 'react'
-
 import { Link } from 'react-router-dom'
-// import NewResource from './NewResource'
 
 function SubjectPage() {
     const [subjects, setSubjects] = useState([])
     const [searchTerm, setSearchTerm] = useState("");
-
-    // const [newResource, setNewResource] = useState([]);
-
-
-
 
     useEffect(() => {
 fetch(`http://localhost:9292/subjects`)
@@ -20,17 +13,20 @@ fetch(`http://localhost:9292/subjects`)
 .then((data) => setSubjects(data))
 
     }, [])
+    console.log(subjects)
+
 
     const displayedSubjects = subjects.filter((subject) => {
       return subject.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
+
+
 return (
   <div>
 
   <div className='subjectList'>
    <h2>
   {subjects.name}
-
 
  </h2>
  <div className='subjectsTitle'>
@@ -42,14 +38,11 @@ return (
  {displayedSubjects.map((subject) => (
 
   <div key={subject.id}>
-
   <h2  >
 <Link to={`/subjects/${subject.id}`}  >
-
   {subject.name}
 </Link>
   </h2>
-
   </div>
 
  ))}
