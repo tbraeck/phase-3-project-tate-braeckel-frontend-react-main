@@ -27,9 +27,13 @@ useEffect(()=>{
 
 
   const handleCreate = (newResource) => {
-    setEditingResource((resource) => [...subject, newResource]);
+    setEditingResource(editingResource => [...editingResource, newResource]);
   };
 
+  // function handleAddPlant(newPlant) {
+  //   const updatedPlantsArray = [...plants, newPlant];
+  //   setPlants(updatedPlantsArray);
+  // }
   function handleDelete(id) {
 
             fetch(`http://localhost:9292/resources/${id}`, {
