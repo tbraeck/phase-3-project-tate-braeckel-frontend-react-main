@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import ResourceEdit 
 
 const ResourceEdit = ({ resource, onUpdated }) => {
-  const [name, setName] = useState(resource.name);
-  const [description, setDescription] = useState(resource.description);
-  const [url, setUrl] = useState(resource.url);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [url, setUrl] = useState('');
 
 const id = resource.id;
 console.log(resource)
