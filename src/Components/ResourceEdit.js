@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ResourceEdit 
+// import ResourceEdit 
 
 const ResourceEdit = ({ resource, onUpdated }) => {
   const [name, setName] = useState('');
