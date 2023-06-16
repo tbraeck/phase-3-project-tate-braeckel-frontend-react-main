@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
 
-const NewResource = ({ onCreate }) => {
+const NewResource = ({ onCreate, subjectID }) => {
   const [name, setName] = useState("")
 const [description, setDescription] = useState("");
  const [url, setUrl] = useState("")
+//  const subject_ID = subjectID;
 
 
 function handleSubmit(e){
@@ -12,8 +13,8 @@ function handleSubmit(e){
         let newResource = {
                 name: name,
                 description: description,
-                url: url            }
-
+                url: url 
+                    }
 
             fetch(`http://localhost:9292/resources`, {
                 method: "POST",
@@ -23,12 +24,12 @@ function handleSubmit(e){
                 body: JSON.stringify(newResource)
             })
                 .then((r) => r.json())
-                .then((aResource) => onCreate(aResource))
+                .then((aResource) => console.log(aResource)
+                )
 setName('')
 setDescription('')
 setUrl('')
 }
-
   return (
 <div className="newResourceForm" >
            <div className="h2Wrapper">

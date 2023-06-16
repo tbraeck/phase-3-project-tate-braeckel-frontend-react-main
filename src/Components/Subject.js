@@ -34,20 +34,18 @@ function onDelete(){
 
 }
 
-function onAdd(){
+// function onAdd(){
 
-}
-
+// }
+console.log(subject.resources)
 function onCreate(newResource){
- 
-     const updatedResArray= setSubject[...resources, newResource];
-
+    setSubject([...subject, newResource]);
 }
 
 // function handleAddPlant(newPlant) {
 //   const updatedPlantsArray = [...plants, newPlant];
 //   setPlants(updatedPlantsArray);
-}
+
 
 function onUpdate(updatedRes){
 
@@ -57,6 +55,10 @@ function onUpdate(updatedRes){
       setSubject(subject);
     };
 
+const subjectID = subject.id;
+
+
+console.log(subject.id)
 
 
 const resourcesList = subject.resources.map(resource => (
@@ -65,10 +67,10 @@ const resourcesList = subject.resources.map(resource => (
 
 return (
  <div>
-  <NewResource onCreate={onCreate}/>
+  <NewResource onCreate={onCreate} subjectID={subjectID}/>
  <h1>Subject: </h1>
  <ul>{resourcesList}</ul>
- <ResourceEdit onUpdate={onUpdate}/>
+ <ResourceEdit onUpdate={onUpdate} subjectID={subjectID}/>
  </div>
 )
 
