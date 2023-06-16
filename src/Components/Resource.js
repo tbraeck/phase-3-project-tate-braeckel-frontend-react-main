@@ -1,27 +1,31 @@
 import React from 'react';
 
-const Resource = ({ resource, subjectID, onDelete, onEdit }) => {
-  
+const Resource = ({ resource, onDelete, onEdit }) => {
+  const {name, description, url} = resource;
   console.log(resource)
+
       return (
     <div className='resourceBox'>
         <h1>Name: </h1>
-      <h2>{resource.name}</h2>
+      <h2>
+        {name}
+      </h2>
       <br/>
       <hr></hr>
          <h1>Resource #: </h1>
 
-      <h2>{resource.description}</h2>
+      <h2>{description}</h2>
       <br/>
       <hr></hr>
       <h1>Resource URL: </h1>
 
-      <h2>{resource.url}</h2>
+      <h2>{url}</h2>
       <br/>
       <hr></hr>
       <button onClick={() => onDelete(resource.id)}>Delete</button>
       <button onClick={() => onEdit(resource)}>Edit</button>
     </div>
+  
 
       // <div className='resourceBox'>
       //       <br/>
@@ -41,8 +45,8 @@ const Resource = ({ resource, subjectID, onDelete, onEdit }) => {
       //       < a href={url} target="_blank" rel="noopener noreferrer">{url}</a>  
       //       </div>
       //       )
-  );
-};
+  )}
+
 
 export default Resource;
 

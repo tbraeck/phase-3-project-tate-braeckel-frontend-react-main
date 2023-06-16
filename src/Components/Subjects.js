@@ -1,37 +1,28 @@
 import React from 'react'
 import Search from './Search'
-import { useState, useEffect} from 'react'
+import { useState} from 'react'
 import { Link } from 'react-router-dom'
 
-function SubjectPage() {
-    const [subjects, setSubjects] = useState([])
+
+
+function Subjects({subjects}) {
     const [searchTerm, setSearchTerm] = useState("");
 
-    useEffect(() => {
-fetch(`http://localhost:9292/subjects`)
-.then((r) => r.json())
-.then((data) => setSubjects(data))
-
-    }, [])
-    console.log(subjects)
-
+// console.log("subjects", subjects.length)
 
     const displayedSubjects = subjects.filter((subject) => {
       return subject.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
 
+
+   
+
 return (
   <div>
-
   <div className='subjectList'>
-   <h2>
-  {subjects.name}
-
- </h2>
  <div className='subjectsTitle'>
  <h1 >SUBJECTS</h1>
-
  </div>
  <div className='subjectMap  ' >
 
@@ -44,7 +35,6 @@ return (
 </Link>
   </h2>
   </div>
-
  ))}
  </div>
   </div>
@@ -56,6 +46,6 @@ return (
   )
 }
 
-export default SubjectPage
+export default Subjects
 
 

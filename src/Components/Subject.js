@@ -1,103 +1,149 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import Resource from './Resource';
-import NewResource from  './NewResource';
+import { useParams } from 'react-router';
+import NewResource from './NewResource';
 import ResourceEdit from './ResourceEdit';
 
-const Subject = () => {
-  const [subject, setSubject] = useState([])
-  // const [resource, setResource] = useState([]);
-  const [editingResource, setEditingResource] = useState([]);
 
+
+const Subject= ({ onDelete, onEdit }) => {
+  const [subject, setSubject] = useState({
+    resources: []
+  })
+
+
+
+  const {id} = useParams()
 
   useEffect(() => {
-    fetch(`http://localhost:9292/subjects`)
+    fetch(`http://localhost:9292/subjects/${id}`)
     .then((r) => r.json())
     .then((data) => setSubject(data))
-        }, [])
-console.log(subject)
-
-useEffect(()=>{
-  fetch(`http://localhost:9292/resources`)
-  .then(res => res.json())
-  .then(data => setEditingResource(data))
-}, []);
+  }, [id])
 
 
+console.log(subject.resources)
 
-
-  const handleCreate = (newResource) => {
-    setEditingResource(editingResource => [...editingResource, newResource]);
-  };
-
-  // function handleAddPlant(newPlant) {
-  //   const updatedPlantsArray = [...plants, newPlant];
-  //   setPlants(updatedPlantsArray);
-  // }
-  function handleDelete(id) {
-
-            fetch(`http://localhost:9292/resources/${id}`, {
+function onDelete(){
+  fetch(`http://localhost:9292/resources/${id}`, {
               method: "DELETE",
             });
             setSubject((prevResources) => prevResources.filter((res) => res.id !== id)
             )
-  };
 
-  const handleEdit = (subject) => {
-    setSubject(subject);
-  };
+}
 
-  const handleUpdate = (updatedRes) => {
-    setEditingResource((prevResources) =>
-      prevResources.map((resource) => (subject.id === updatedRes.user.id ? updatedRes : resource))
-    );
-    setEditingResource(null);
-  };
+function onAdd(){
 
-console.log(subject)
+}
 
-// const updatedResource = subject.resources.map(resource => {
-//   if(subject.id === updatedResource.id) {
-//     return updatedResource
-//   }
-//   return resource
-// })
+function onCreate(newResource){
+ 
+     const updatedResArray= setSubject[...resources, newResource];
 
-const resourcesMap =  subject.map((sub) => (
-  sub.resources.map((resource)=> (
-<div key={resource.id}>
-  <h1>{subject.name}</h1>
-  <Resource
-    resource={resource}
-    subjectID={subject.id}
-    onDelete={handleDelete}
-    onEdit={handleEdit}
-  />
-  </div>
-))))
+}
 
-console.log(subject)
+// function handleAddPlant(newPlant) {
+//   const updatedPlantsArray = [...plants, newPlant];
+//   setPlants(updatedPlantsArray);
+}
 
-  return (
-    <div>
-      <NewResource onCreated={handleCreate} />
-      <div>
-        <h1>
-          {subject.name}
-        </h1>
-      </div>
-      <div>
-        {resourcesMap}
-      </div>
-     
-      {editingResource && (
-        <ResourceEdit resource={editingResource} onUpdated={handleUpdate} />
-      )}
-    </div>
-  );
-};
+function onUpdate(updatedRes){
+
+      setSubject((prevResources) =>
+        prevResources.map((resource) => (resource.id === updatedRes.id ? updatedRes : resource))
+      );
+      setSubject(subject);
+    };
+
+
+
+const resourcesList = subject.resources.map(resource => (
+  <Resource key={resource.id} resource={resource} onDelete={onDelete} onEdit={onEdit} />
+))
+
+return (
+ <div>
+  <NewResource onCreate={onCreate}/>
+ <h1>Subject: </h1>
+ <ul>{resourcesList}</ul>
+ <ResourceEdit onUpdate={onUpdate}/>
+ </div>
+)
+
+}
+
 
 export default Subject;
+
+  // const handleCreate = (newResource) => {
+  //   setEditingResource([...editingResource, newResource]);
+  // };
+
+  // function handleDelete(id) {
+
+  //           fetch(`http://localhost:9292/resources/${id}`, {
+  //             method: "DELETE",
+  //           });
+  //           setEditingResource((prevResources) => prevResources.filter((res) => res.id !== id)
+  //           )
+  // };
+
+  // const handleEdit = (subject) => {
+  //   setSubject(subject);
+  // };
+
+  // const handleUpdate = (updatedRes) => {
+  //   setEditingResource((prevResources) =>
+  //     prevResources.map((resource) => (subjects.id === updatedRes.subjects.id ? updatedRes : resource))
+  //   );
+  //   setEditingResource(null);
+  // };
+
+// console.log(subjects.resources)
+
+// const updatedResource = subjects.resources.map(resource => {
+//   if(resource.id === updatedResource.id) {
+//     return updatedResource
+//   }}
+// )
+
+
+
+
+// const resourceCard =  subjects.map((resource) => {
+// const resList = resource.map(
+// <Resource key={resource.id} 
+// // subject={subjects}
+// resource={resource}
+// // setSubject={setSubject}
+// onDelete={handleDelete}
+// onEdit={handleUpdate}
+// value={subjects}
+// subjectID={subjects.id}/>)
+  
+// })
+// console.log(resources)
+
+/* <div key={sub.id}>
+  <h1>{sub.resources.name}</h1>
+  <Resource
+    resource={sub.resources}
+    subjectID={sub.id}
+    onDelete={handleDelete}
+    onEdit={handleUpdate}
+  />
+  </div>
+)) */
+
+
+
+// console.log(subject)
+
+
+
+  
 
 
 

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-// import ResourceEdit 
+import { useParams } from 'react-router';
 
-const ResourceEdit = ({ resource, onUpdated }) => {
+
+const ResourceEdit = ({  onUpdate }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
 
-const id = resource.id;
-console.log(resource)
+const {id} = useParams()
+
+
+// console.log(resource)
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -21,7 +24,7 @@ console.log(resource)
                 .then((res) => res.json())
                 .then((data) => {
     
-      onUpdated(data);
+      onUpdate(data);
                 })
   };
 

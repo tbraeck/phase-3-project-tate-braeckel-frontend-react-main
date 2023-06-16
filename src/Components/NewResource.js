@@ -1,21 +1,11 @@
 
 import React, { useState } from 'react';
 
-const NewResource = ({ onCreated }) => {
+const NewResource = ({ onCreate }) => {
   const [name, setName] = useState("")
 const [description, setDescription] = useState("");
  const [url, setUrl] = useState("")
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.post('/api/items', { resource });
-//       onCreated(response.data);
-//       setResource('');
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
 
 function handleSubmit(e){
         e.preventDefault()
@@ -33,7 +23,7 @@ function handleSubmit(e){
                 body: JSON.stringify(newResource)
             })
                 .then((r) => r.json())
-                .then((aResource) => onCreated(aResource))
+                .then((aResource) => onCreate(aResource))
 setName('')
 setDescription('')
 setUrl('')
@@ -68,6 +58,16 @@ export default NewResource;
 
 
 
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await axios.post('/api/items', { resource });
+//       onCreated(response.data);
+//       setResource('');
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
 
 
