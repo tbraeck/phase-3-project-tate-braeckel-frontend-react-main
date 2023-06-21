@@ -7,72 +7,72 @@ import ResourceEdit from './ResourceEdit';
 
 
 
-const Subject= ({ onDelete, onEdit }) => {
+const Subject= ({subjects, resources, setResources, handleDelete,  handleAdd, handleUpdate}) => {
   const [subject, setSubject] = useState({
     resources: []
   })
 
+const {id} = useParams()
 
+console.log(subjects)
 
-  const {id} = useParams()
+console.log(subject)
+ 
+
 
   useEffect(() => {
     fetch(`http://localhost:9292/subjects/${id}`)
     .then((r) => r.json())
     .then((data) => setSubject(data))
+
+    // fetch(`http://localhost:9292/subjects/resources/${id}`)
+    // .then((r) => r.json())
+    // .then((data) => setResources(data))
   }, [id])
 
+// console.log("resources",resources)
 
-console.log(subject.resources)
-
-function onDelete(){
+function handleDeleteClick(){
   fetch(`http://localhost:9292/resources/${id}`, {
               method: "DELETE",
             });
-            setSubject((prevResources) => prevResources.filter((res) => res.id !== id)
-            )
-
+            handleDelete(id)            
 }
+console.log(resources)
 
-// function onAdd(){
-
-// }
-console.log(subject.resources)
-function onCreate(newResource){
-    setSubject([...subject, newResource]);
-}
-
-// function handleAddPlant(newPlant) {
-//   const updatedPlantsArray = [...plants, newPlant];
-//   setPlants(updatedPlantsArray);
-
-
-function onUpdate(updatedRes){
-
-      setSubject((prevResources) =>
-        prevResources.map((resource) => (resource.id === updatedRes.id ? updatedRes : resource))
-      );
-      setSubject(subject);
-    };
+      
 
 const subjectID = subject.id;
 
 
-console.log(subject.id)
+// console.log(subject.id)
+console.log(subject.resources)
 
 
-const resourcesList = subject.resources.map(resource => (
-  <Resource key={resource.id} resource={resource} onDelete={onDelete} onEdit={onEdit} />
+const resourcesList = subject.resources;
+
+const allResources = resourcesList.map((resource) => (
+  <div>
+    <Resource key={resource.id} resource={resource} handleDeleteClick={handleDeleteClick} handleUpdate={handleUpdate} subjectID={subjectID}/>
+    {/* <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subjectID} resources={resources} setResources={setResources}/> */}
+</div>
 ))
 
 return (
- <div>
-  <NewResource onCreate={onCreate} subjectID={subjectID}/>
- <h1>Subject: </h1>
- <ul>{resourcesList}</ul>
- <ResourceEdit onUpdate={onUpdate} subjectID={subjectID}/>
- </div>
+            <div>
+              <div className='newResForm'>
+              <NewResource  subjectID={subjectID} subject={subject} setSubject={setSubject} resources={resources}  handleAdd={handleAdd} />
+              </div>
+            <div className='subTitle'>
+            <h1>Subject: </h1>
+            <h2><em>{subject.name}</em></h2>
+            </div>
+
+              <ul>{allResources}</ul>
+              </div>
+
 )
+
 
 }
 

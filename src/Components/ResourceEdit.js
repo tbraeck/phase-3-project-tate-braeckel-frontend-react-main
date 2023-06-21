@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
+import NewResource from './NewResource';
 
 
-const ResourceEdit = ({  onUpdate }) => {
+const ResourceEdit = ({  handleUpdate, handleAdd }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
+
 
 const {id} = useParams()
 
@@ -22,9 +24,9 @@ const {id} = useParams()
                 body: JSON.stringify({ name,description,url })
               })
                 .then((res) => res.json())
-                .then((data) => {
+                .then((updatedRes) => {
     
-      onUpdate(data);
+                  handleUpdate(updatedRes);
                 })
   };
 
@@ -49,6 +51,7 @@ const {id} = useParams()
         placeholder="Enter url"
       />
       <button type="submit">Update</button>
+
     </form>
   );
 };

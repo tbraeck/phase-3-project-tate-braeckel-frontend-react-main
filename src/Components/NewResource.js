@@ -1,35 +1,39 @@
 
 import React, { useState } from 'react';
+// import { useParams } from 'react-router';
 
-const NewResource = ({ onCreate, subjectID }) => {
-  const [name, setName] = useState("")
-const [description, setDescription] = useState("");
- const [url, setUrl] = useState("")
-//  const subject_ID = subjectID;
+const NewResource = ({ handleAdd, subjectID}) => {
+const [name, setName] = useState('')
+const [description, setDescription] = useState('')
+const [url, setUrl] = useState('')
+const subject_id = subjectID;
+
+console.log(name,description,url, subject_id)
+
+function handleSubmitResource(e){
+e.preventDefault()
+
+    const newResource = {
+    name: name,
+    description: description,
+    url: url,
+    subjectID: subject_id
+    }
+  
+    fetch( "http://localhost:9292/resources", {
+      method: "POST",
+      header: {
+        "Content-Type": 'application/json',
+      },
+        body: JSON.stringify(newResource),
+    })
+        .then((r) => r.json())
+        .then(newResourceData => {
+            handleAdd(newResourceData)
+        })
+  }
 
 
-function handleSubmit(e){
-        e.preventDefault()
-        let newResource = {
-                name: name,
-                description: description,
-                url: url 
-                    }
-
-            fetch(`http://localhost:9292/resources`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: JSON.stringify(newResource)
-            })
-                .then((r) => r.json())
-                .then((aResource) => console.log(aResource)
-                )
-setName('')
-setDescription('')
-setUrl('')
-}
   return (
 <div className="newResourceForm" >
            <div className="h2Wrapper">
@@ -37,10 +41,10 @@ setUrl('')
            </div>
            <br/>            <br/>
 
-            <form className="form" onSubmit={handleSubmit}>
-                <input className="formInput" type="text" name="name" placeholder="Resource Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <form className="form" onSubmit={handleSubmitResource}>
+                <input className="formInput" type="text" name="name" placeholder="Resource Name" value={name} onChange={(e)=> setName(e.target.value)} />
                 <input className="formInput" type="text" name="description" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                <input className="formInput" type="text" name="url" placeholder="URL" value={url} onChange={(e) => setUrl(e.target.value)} />
+                <input className="formInput" type="text" name="url" placeholder="URL" value={url} onChange={(e)=> setUrl(e.target.value)} />
                 
                <div>
                     <button className="formButton" type="submit">Add Resource</button>

@@ -1,29 +1,37 @@
 import React from 'react';
+import { useState } from 'react';
+import ResourceEdit from './ResourceEdit';
 
-const Resource = ({ resource, onDelete, onEdit }) => {
-  const {name, description, url} = resource;
-  console.log(resource)
+const Resource = ({ resource, handleDeleteClick, handleupdateClick, subjectID }) => {
+  const {name, description, url,id} = resource;
+  const [showForm, setShowForm] = useState(false)
+
 
       return (
     <div className='resourceBox'>
-        <h1>Name: </h1>
-      <h2>
-        {name}
-      </h2>
-      <br/>
-      <hr></hr>
-         <h1>Resource #: </h1>
+            <h1>Name: </h1>
+          <h2>
+            {name}
+          </h2>
+          <br/>
+          <hr></hr>
+            <h1>Resource #: </h1>
+            {id}
+            <h1>Description: </h1>
 
-      <h2>{description}</h2>
-      <br/>
-      <hr></hr>
-      <h1>Resource URL: </h1>
+          <h2>{description}</h2>
+          <br/>
+          <hr></hr>
+          <h1>Resource URL: </h1>
 
-      <h2>{url}</h2>
-      <br/>
-      <hr></hr>
-      <button onClick={() => onDelete(resource.id)}>Delete</button>
-      <button onClick={() => onEdit(resource)}>Edit</button>
+          <h2>{url}</h2>
+          <br/>
+          <hr></hr>
+      <button onClick={handleDeleteClick}>Delete</button>
+      <button onClick={handleupdateClick}>Edit</button>
+      {showForm ?     <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subjectID} resources={resources} setResources={setResources}/>
+ : null}
+
     </div>
   
 
