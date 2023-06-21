@@ -7,16 +7,10 @@ import { Link } from 'react-router-dom'
 
 function Subjects({subjects}) {
     const [searchTerm, setSearchTerm] = useState("");
-
-// console.log("subjects", subjects.length)
-
-    const displayedSubjects = subjects.filter((subject) => {
+    
+    const filteredSubjects = subjects.filter((subject) => {
       return subject.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
-
-
-
-   
 
 return (
   <div>
@@ -26,7 +20,7 @@ return (
  </div>
  <div className='subjectMap  ' >
 
- {displayedSubjects.map((subject) => (
+ {filteredSubjects.map((subject) => (
 
   <div key={subject.id}>
   <h2  >
