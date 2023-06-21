@@ -1,10 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
-import ResourceEdit from './ResourceEdit';
+
+// import ResourceEdit from './ResourceEdit';
 
 const Resource = ({ resource, handleDeleteClick, handleupdateClick, subjectID }) => {
   const {name, description, url,id} = resource;
-  const [showForm, setShowForm] = useState(false)
+  // const [showForm, setShowForm] = useState(false)
 
 
       return (
@@ -29,8 +29,7 @@ const Resource = ({ resource, handleDeleteClick, handleupdateClick, subjectID })
           <hr></hr>
       <button onClick={handleDeleteClick}>Delete</button>
       <button onClick={handleupdateClick}>Edit</button>
-      {showForm ?     <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subjectID} resources={resources} setResources={setResources}/>
- : null}
+    
 
     </div>
   

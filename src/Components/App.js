@@ -11,7 +11,7 @@ import Subjects from './Subjects'
 
 function App() {
   const [subjects, setSubjects] = useState([])
-  const [resources, setResources] = useState([])
+  // const [resources, setResources] = useState([])
   const [loading, setLoading] = useState(true)
 
 //have links reroute to specific page 
@@ -20,45 +20,43 @@ function App() {
   useEffect(() => {
     fetch(`http://localhost:9292/subjects`)
           .then((r) => r.json())
-          .then((data) => setSubjects(data))
-          setLoading(false)
-      
-          fetch(`http://localhost:9292/resources`)
-          .then((r) => r.json())
-          .then((data) => setResources(data))
-          // setLoading(false)
-              }, [])
+          .then((data) => {
+            setSubjects(data)
+            setLoading(false)
 
-              if(loading)
-              return <h1>Loading...</h1>
-      console.log(resources, "resources")
+          })
+     }, [])
 
-      function handleAdd(newResource){
-        const resourceArray = [...resources, newResource]
-        setResources(resourceArray)
-      }
+      if(loading)
+      return <h1>Loading...</h1>
 
-      console.log(resources, "resources")
+// console.log('resources', subjects.resources
+// )
+
+const handleAdd = (newResource) => {
+      const resourceArray = [...subjects.resources, newResource]
+      setSubjects(resourceArray)
+    }
       // console.log(subjects.resources, "subjects")
        
 const handleDelete = (id) => {
-  const updatedResourceList = resources.filter((resource) => {
-    return resource.id !== id
-  });
-  setSubjects(  setResources(updatedResourceList)
-  )
-}
+    const updatedResourceList = subjects.resources.filter((resource) => {
+        return resource.id !== id
+      });
+    setSubjects(updatedResourceList)
+  
+    }
 
 
-function handleUpdate(upRes) {
-const updatedRes = resources.map(res => {
+const handleUpdate =(upRes) => {
+const updatedRes = subjects.resources.map(res => {
   if (res.id === upRes.id) {
     return updatedRes
   } else {
     return res;
   }
 })
-setResources(updatedRes)
+setSubjects(updatedRes)
 }
 
   return (
@@ -71,7 +69,7 @@ setResources(updatedRes)
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/subjects" element={<Subjects subjects={subjects} setSubjects={setSubjects} handleAdd={handleAdd}/> } />
-          <Route path="/subjects/:id" element={<Subject subjects={subjects}  setSubjects={setSubjects} handleAdd={handleAdd} handleUpdate={handleUpdate}   handleDelete={handleDelete} resources={resources} setResources={setResources} />} />
+          <Route path="/subjects/:id" element={<Subject subjects={subjects}  setSubjects={setSubjects} handleAdd={handleAdd} handleUpdate={handleUpdate}  handleDelete={handleDelete}  />} />
           <Route path="/subjects/:id/edit" element={<Subject subjects={subjects}  setSubjects={setSubjects}/>} />
 
 

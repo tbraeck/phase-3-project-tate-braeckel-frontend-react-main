@@ -1,67 +1,53 @@
 
 import React, { useState , useEffect} from 'react';
 import Resource from './Resource';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import NewResource from './NewResource';
 import ResourceEdit from './ResourceEdit';
 
 
-
-const Subject= ({subjects, resources, setResources, handleDelete,  handleAdd, handleUpdate}) => {
+const Subject = ({subjects, handleDelete,  handleAdd, handleUpdate}) => {
   const [subject, setSubject] = useState({
     resources: []
   })
 
 const {id} = useParams()
 
-console.log(subjects)
+console.log(id)
 
-console.log(subject)
- 
-
-
+ console.log(subjects)
   useEffect(() => {
-    fetch(`http://localhost:9292/subjects/${id}`)
+ fetch(`http://localhost:9292/subjects/${id}`)
     .then((r) => r.json())
     .then((data) => setSubject(data))
+    console.log(subjects)
 
-    // fetch(`http://localhost:9292/subjects/resources/${id}`)
-    // .then((r) => r.json())
-    // .then((data) => setResources(data))
-  }, [id])
+    },[])
 
-// console.log("resources",resources)
+  
 
-function handleDeleteClick(){
+const handleDeleteClick = ()=> {
   fetch(`http://localhost:9292/resources/${id}`, {
               method: "DELETE",
             });
             handleDelete(id)            
 }
-console.log(resources)
 
-      
+console.log(subjects.resources)
+console.log(subjects)
+console.log(id)
+console.log(subject)
 
-const subjectID = subject.id;
-
-
-// console.log(subject.id)
-console.log(subject.resources)
-
-
-const resourcesList = subject.resources;
-
-const allResources = resourcesList.map((resource) => (
+const allResources = subject.resources.map((resource) => (
   <div>
-    <Resource key={resource.id} resource={resource} handleDeleteClick={handleDeleteClick} handleUpdate={handleUpdate} subjectID={subjectID}/>
-    {/* <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subjectID} resources={resources} setResources={setResources}/> */}
+    <Resource key={resource.id} resource={resource} handleDeleteClick={handleDeleteClick} handleUpdate={handleUpdate} subjectID={subject.id}/>
 </div>
 ))
 
 return (
             <div>
               <div className='newResForm'>
-              <NewResource  subjectID={subjectID} subject={subject} setSubject={setSubject} resources={resources}  handleAdd={handleAdd} />
+              <NewResource  subjectID={subject.id} subject={subject} setSubject={setSubject}  handleAdd={handleAdd} />
               </div>
             <div className='subTitle'>
             <h1>Subject: </h1>
@@ -69,6 +55,7 @@ return (
             </div>
 
               <ul>{allResources}</ul>
+              <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subject.id} />
               </div>
 
 )

@@ -6,9 +6,9 @@ const NewResource = ({ handleAdd, subjectID}) => {
 const [name, setName] = useState('')
 const [description, setDescription] = useState('')
 const [url, setUrl] = useState('')
-const subject_id = subjectID;
+// const subject_id = subjectID;
 
-console.log(name,description,url, subject_id)
+console.log(name,description,url)
 
 function handleSubmitResource(e){
 e.preventDefault()
@@ -16,8 +16,7 @@ e.preventDefault()
     const newResource = {
     name: name,
     description: description,
-    url: url,
-    subjectID: subject_id
+    url: url
     }
   
     fetch( "http://localhost:9292/resources", {
