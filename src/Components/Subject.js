@@ -1,62 +1,47 @@
 
-import React, { useState , useEffect} from 'react';
+import React from 'react';
 import Resource from './Resource';
 import { useParams } from 'react-router-dom';
 import NewResource from './NewResource';
-import ResourceEdit from './ResourceEdit';
+// import ResourceEdit from './ResourceEdit';
 
 
 const Subject = ({subjects, handleDelete,  handleAdd, handleUpdate}) => {
-  const [subject, setSubject] = useState({
-    resources: []
-  })
 
 const {id} = useParams()
 
-console.log(id)
-
- console.log(subjects)
-  useEffect(() => {
- fetch(`http://localhost:9292/subjects/${id}`)
-    .then((r) => r.json())
-    .then((data) => setSubject(data))
-    console.log(subjects)
-
-    },[])
-
-  
+const subject = subjects.find(sub => sub.id === parseInt(id, 10)) 
+console.log("subject",subject)
+console.log("resources",subject.resources)
 
 const handleDeleteClick = ()=> {
-  fetch(`http://localhost:9292/resources/${id}`, {
+  fetch(`http://localhost:9292/resources/${subject.id}`, {
               method: "DELETE",
             });
-            handleDelete(id)            
+            handleDelete(subject.id)            
 }
 
-console.log(subjects.resources)
-console.log(subjects)
-console.log(id)
-console.log(subject)
-
 const allResources = subject.resources.map((resource) => (
-  <div>
-    <Resource key={resource.id} resource={resource} handleDeleteClick={handleDeleteClick} handleUpdate={handleUpdate} subjectID={subject.id}/>
+  <div key={resource.id}>
+    <Resource  resource={resource} handleDeleteClick={handleDeleteClick} handleUpdate={handleUpdate} subjectID={subject.id}/>
 </div>
 ))
 
 return (
-            <div>
-              <div className='newResForm'>
-              <NewResource  subjectID={subject.id} subject={subject} setSubject={setSubject}  handleAdd={handleAdd} />
-              </div>
-            <div className='subTitle'>
-            <h1>Subject: </h1>
-            <h2><em>{subject.name}</em></h2>
-            </div>
-
-              <ul>{allResources}</ul>
-              <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subject.id} />
-              </div>
+  <div className='newResourceBox'>
+    <div className='subjectAll'>
+            
+      <div className='subTitle'>
+          <h1>Subject: </h1>
+          <h2><em>{subject.name}</em></h2>
+      </div>
+            <ul>{allResources}</ul>
+              {/* <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subject.id} /> */}
+          <div className='newResForm'>
+              <NewResource  subjectID={subject.id} subject={subject}   handleAdd={handleAdd} />
+          </div>
+      </div>
+  </div>
 
 )
 
