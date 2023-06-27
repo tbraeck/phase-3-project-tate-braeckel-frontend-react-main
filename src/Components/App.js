@@ -12,6 +12,7 @@ function App() {
   const [subjects, setSubjects] = useState([])
   const [loading, setLoading] = useState(true)
 
+
   useEffect(() => {
     fetch(`http://localhost:9292/subjects`)
           .then((r) => r.json())
@@ -24,20 +25,20 @@ function App() {
 
       if(loading)
       return <h1>Loading...</h1>
-console.log("resources", subjects.resources)
+// console.log("resources", subjects.resources)
+// console.log(resources)
 
-const handleAdd = (newResource) => {
-      const resourceArray = [...subjects.resources, newResource]
-      setSubjects(resourceArray)
+const handleAdd = (newSubject) => {
+      const newResourceArray = [...subject, newSubject]
+      setSubjects(subjectArray)
     }
-      console.log(subjects, "subjects")
-       
-const handleDelete = (id) => {
-    const updatedResourceList = subjects.resources.filter((resource) => {
-        return resource.id !== id
-      });
-    setSubjects(updatedResourceList)
-    }
+      // console.log(subjects, "subjects")
+
+      
+
+console.log(subjects)
+
+
 
 const handleUpdate =(upRes) => {
 const updatedRes = subjects.resources.map(res => {
@@ -50,6 +51,7 @@ const updatedRes = subjects.resources.map(res => {
 setSubjects(updatedRes)
 }
 
+
   return (
     <div className="App">
 
@@ -59,11 +61,9 @@ setSubjects(updatedRes)
       <div className="routes">
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/subjects" element={<Subjects subjects={subjects} setSubjects={setSubjects} handleAdd={handleAdd}/> } />
-          <Route path="/subjects/:id" element={<Subject subjects={subjects}  setSubjects={setSubjects} handleAdd={handleAdd} handleUpdate={handleUpdate}  handleDelete={handleDelete}  />} />
+          <Route path="/subjects" element={<Subjects subjects={subjects} setSubjects={setSubjects} handleAdd={handleAdd}  /> } />
+          <Route path="/subjects/:id" element={<Subject subjects={subjects}  setSubjects={setSubjects} handleAdd={handleAdd} handleAddResource={handleAddResource}   handleUpdate={handleUpdate}/>} />
           <Route path="/subjects/:id/edit" element={<Subject subjects={subjects}  setSubjects={setSubjects}/>} />
-
-
         </Routes>
       </div>
     </div>
