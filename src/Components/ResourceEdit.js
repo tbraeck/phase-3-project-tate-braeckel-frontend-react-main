@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
-// import NewResource from './NewResource';
 
-
-const ResourceEdit = ({  handleUpdate, handleAdd }) => {
+const ResourceEdit = ({  subjects, handleUpdate}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
 
+  const {id} = useParams()  
 
-const {id} = useParams()
-
-
-// console.log(resource)
-  function handleSubmit(e) {
+function handleSubmit(e) {
     e.preventDefault();
-
     fetch(`http://localhost:9292/resources/${id}`, {
             method: "PATCH",
-                headers: {
+            headers: {
                 "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ name,description,url })
+            },
+            body: JSON.stringify({ name,description,url })
               })
                 .then((res) => res.json())
                 .then((updatedRes) => {
-    
-                  handleUpdate(updatedRes);
+                  setName(updatedRes.name);
+                  setName(updatedRes.description);
+                  setName(updatedRes.url);
                 })
   };
 
@@ -51,7 +46,6 @@ const {id} = useParams()
         placeholder="Enter url"
       />
       <button type="submit">Update</button>
-
     </form>
   );
 };

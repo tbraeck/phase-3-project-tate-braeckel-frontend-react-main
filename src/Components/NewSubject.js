@@ -1,79 +1,61 @@
 
 import React, { useState } from 'react';
-// import { useParams } from 'react-router';
 
-const NewResource = ({subject, subjects, setSubjects}) => {
-const [resourceFormData, setResourceFormData] = useState({
+const NewSubject = ({handleAdd}) => {
+  const [subjectFormData, setSubjectFormData] = useState({
     name: '',
     description: '',
     url: '',
-    subject_id: subject.id
-    })
+    resources: []
+  })
 
-  const {name, description, url, subject_id} = resourceFormData
-  // console.log(resource)
+const {name, description, url} = subjectFormData;
 
-console.log(resourceFormData)
-
-const handleResourceChange = (e) => {
+const handleSubjectChange = (e) => {
   let name = e.target.name;
   let value = e.target.value;
-  setResourceFormData({...resourceFormData, [name] :value})
+  setSubjectFormData({...subjectFormData, [name] :value})
 }
-// console.log(subject.resources)
-let subjectOptions = subjects.map(subject => (
-  <option value={subject.id} key={subject.id} defaultValue={'Select'}>{subject.name}</option>
-))
 
-const handleSubmitResource = (e) =>{
+const handleSubmitSubject = (e) => {
     e.preventDefault()
-    fetch( "http://localhost:9292/resources", {
+    fetch( "http://localhost:9292/subjects", {
       method: "POST",
       headers: {
         "Content-Type": 'application/json',
       },
-        body: JSON.stringify(resourceFormData),
-    })
+        body: JSON.stringify(subjectFormData),
+      })
         .then((r) => r.json())
-        .then((newResourceData) => {
-          const newResourceArray = {
-            ...subject, resources: [subject.resources, newResourceData]
-           }
-           const updatedSubjects = subjects.map(sub => sub.id === newResourceData.subject_id ? newResourceArray : sub)
-
-         setSubjects(updatedSubjects)
-            setResourceFormData({
+        .then(newSubjectData => {
+            handleAdd(newSubjectData)
+            setSubjectFormData({
               name: "",
-              description: "",
-              url:"",
-              subject_id:""
+              description:"",
+              url:""
             })
-        })
+      })
   }
 
-
 return (
-  <div className="newResourceForm" >
-    <div className="h2Wrapper">
-      <h2 className="newResourceH2">  <b>A</b>dd  <b>N</b>ew  <b>R</b>esources  <b>H</b>ere  </h2>
+  <div className="newSubjectForm" >
+    <div className="h2WrapperSub">
+      <h2 className="newSubjectH2">  <b>A</b>dd  <b>N</b>ew  <b>S</b>ubjects  <b>H</b>ere  </h2>
     </div>
         <br/><br/>
-            <form className="form" onSubmit={handleSubmitResource}>
-                  <input className="formInput" type="text" name="name" placeholder="Resource Name" value={name} onChange={handleResourceChange} />
-                  <input className="formInput" type="text" name="description" placeholder="Description" value={description} onChange={handleResourceChange} />
-                  <input className="formInput" type="text" name="url" placeholder="URL" value={url} onChange={handleResourceChange} /> 
-                  <select type="integer" name='subject_id' value={subject_id} defaultValue="None" onChange={handleResourceChange}>
-                    {subjectOptions}
-                  </select>
-                <div>
-                  <button className="formButton" type="submit">ADD</button>
-                </div>
-            </form>
-      </div>
+      <form className="subjectForm" onSubmit={handleSubmitSubject}>
+        <input className="formInputSubject" type="text" name="name" placeholder="Subject Name" value={name} onChange={handleSubjectChange} />
+        <input className="formInputSubject" type="text" name="description" placeholder="Description" value={description} onChange={handleSubjectChange} />
+        <input className="formInputSubject" type="text" name="url" placeholder="URL" value={url} onChange={handleSubjectChange} />
+        <div>
+          <button className="formButtonSubject" type="submit">ADD</button>
+        </div>
+      </form>
+  </div>
   );
 };
 
-export default NewResource;
+export default NewSubject;
 
 
 

@@ -1,53 +1,60 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Resource from './Resource';
 import { useParams } from 'react-router-dom';
 import NewResource from './NewResource';
 // import ResourceEdit from './ResourceEdit';
 
-
-const Subject = ({subjects, handleDelete,  handleAdd, handleUpdate}) => {
-
+const Subject = ({subjects, setSubjects}) => {
+const [subject, setSubject] = useState({
+  resources: []
+})
+// const [resFormPop, setResFormPop] = useState(false)
 const {id} = useParams()
 
-const subject = subjects.find(sub => sub.id === parseInt(id, 10)) 
-console.log("subject",subject)
-console.log("resources",subject.resources)
+useEffect(()=> {
+  const selectedSubject = subjects.find(sub => sub.id === parseInt(id));
+if (selectedSubject) {
+  setSubject(selectedSubject)
+}
+}, [subjects, id])
 
-const handleDeleteClick = ()=> {
-  fetch(`http://localhost:9292/resources/${subject.id}`, {
+const handleDeleteClick = (id) => {
+  fetch(`http://localhost:9292/resources/${id}`, {
               method: "DELETE",
-            });
-            handleDelete(subject.id)            
+              headers: {
+                "Content-Type": 'application/json'
+              }
+            })
+            .then(()=> {
+              console.log(id)
+
+            const deleteRes = subject.resources.filter(res => res.id !== id)
+            const updatedResources = subjects.map( s => s.id === subject.id ? {...s, resources: deleteRes} : s)      
+            setSubjects(updatedResources)  
+          })        
 }
 
-const allResources = subject.resources.map((resource) => (
+  const allResources = subject.resources.map((resource) => (
   <div key={resource.id}>
-    <Resource  resource={resource} handleDeleteClick={handleDeleteClick} handleUpdate={handleUpdate} subjectID={subject.id}/>
+    <Resource  resource={resource}  handleDeleteClick={handleDeleteClick} subjectID={subject.id} />
 </div>
 ))
 
 return (
   <div className='newResourceBox'>
     <div className='subjectAll'>
-            
       <div className='subTitle'>
-          <h1>Subject: </h1>
-          <h2><em>{subject.name}</em></h2>
+          <h1><u>Subject:</u> </h1>
+          <h1><em>{subject.name}</em></h1>
       </div>
             <ul>{allResources}</ul>
-              {/* <ResourceEdit handleUpdate={handleUpdate}  handleAdd={handleAdd}  subjectID={subject.id} /> */}
           <div className='newResForm'>
-              <NewResource  subjectID={subject.id} subject={subject}   handleAdd={handleAdd} />
+              <NewResource  subjectID={subject.id}    subject={subject} subjects={subjects} setSubjects={setSubjects}  />
           </div>
       </div>
   </div>
-
-)
-
-
-}
-
+)}
 
 export default Subject;
 
@@ -85,19 +92,6 @@ export default Subject;
 
 
 
-
-// const resourceCard =  subjects.map((resource) => {
-// const resList = resource.map(
-// <Resource key={resource.id} 
-// // subject={subjects}
-// resource={resource}
-// // setSubject={setSubject}
-// onDelete={handleDelete}
-// onEdit={handleUpdate}
-// value={subjects}
-// subjectID={subjects.id}/>)
-  
-// })
 // console.log(resources)
 
 /* <div key={sub.id}>

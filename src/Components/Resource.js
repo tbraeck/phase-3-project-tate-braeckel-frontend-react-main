@@ -1,12 +1,10 @@
 import React from 'react';
 
-// import ResourceEdit from './ResourceEdit';
-
 const Resource = ({ resource, handleDeleteClick, handleupdateClick, subjectID }) => {
   const {name, description, url,id} = resource;
-  // const [showForm, setShowForm] = useState(false)
+  console.log(resource)
 
-
+  
       return (
     <div className='resourceBox'>
             <h1>Name: </h1>
@@ -29,29 +27,7 @@ const Resource = ({ resource, handleDeleteClick, handleupdateClick, subjectID })
           <hr></hr>
       <button onClick={handleDeleteClick}>Delete</button>
       <button onClick={handleupdateClick}>Edit</button>
-    
-
     </div>
-  
-
-      // <div className='resourceBox'>
-      //       <br/>
-      //             <h2>Name: </h2>
-      
-      //       <h1>{name}</h1>
-      //       <br/>
-      //             <h2>Resource #: </h2>
-      
-      //       <h1>{id}</h1>
-      //       <br/>
-      //       <h2>Description: </h2>
-      
-      //       <h3>{description}</h3>
-      //       <br/>
-      //       <h2>Resource URL: </h2>
-      //       < a href={url} target="_blank" rel="noopener noreferrer">{url}</a>  
-      //       </div>
-      //       )
   )}
 
 
